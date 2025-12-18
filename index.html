@@ -205,8 +205,8 @@
                 P: 'ΡРⲢꓑ', // Ｐ     
                 Q: 'Ｑ',
                 R: 'Ｒ',
-                S:"Ѕ",
-                T: 'ΤТꓔＴ',  
+                S: "Ѕ",
+                T: 'ΤТꓔＴ',
                 U: 'ꓴ', //Ｕ 
                 V: 'Ｖ',
                 W: 'ꓪＷ',
@@ -214,7 +214,7 @@
                 Y: 'ΥҮ',
                 Z: 'Ｚꓜ'
             }
-            var regex = RegExp('[' + Object.keys(replacements).join('') + ']','g')
+            var regex = RegExp('[' + Object.keys(replacements).join('') + ']', 'g')
             console.log(regex)
             function get(n) {
                 return replacements[n][0]
@@ -232,18 +232,23 @@
                     navigator.clipboard.writeText(text)
                 }
                 catch (e) {
+                    console.error(e)
                     try {
-                        var temp = document.createElement('textarea')
-                        temp.value = text
-                        document.body.appendChild(temp)
-                        temp.select()
-                        if (document.queryCommandSupported('copy')) {
-                            document.execCommand('copy')
-                            document.body.removeChild(temp)
-                        }
-                        else throw ''
+                        if (document.queryCommandSupported('copy')) 
+                            try {
+                                var temp = document.createElement('textarea')
+                                temp.value = text
+                                document.body.appendChild(temp)
+                                temp.select()
+                                document.execCommand('copy')
+                            }
+                            finally {
+                                document.body.removeChild(temp)
+                            }
+                        else prompt("Copy the text", text)
                     }
                     catch (e) {
+                        console.error(e)
                         prompt("Copy the text", text)
                     }
                 }
