@@ -237,8 +237,10 @@
                         temp.value = text
                         document.body.appendChild(temp)
                         temp.select()
-                        if (document.queryCommandSupported('copy'))
+                        if (document.queryCommandSupported('copy')) {
+                            document.execCommand('copy')
                             document.body.removeChild(temp)
+                        }
                         else throw ''
                     }
                     catch (e) {
